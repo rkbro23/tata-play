@@ -1,0 +1,159 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #0e0e0e;
+  color: #fff;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  background: #111;
+  padding: 10px 20px;
+}
+
+.logo {
+  height: 40px;
+  margin-right: 15px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  color: #f06;
+}
+
+#search-container {
+  padding: 10px;
+  text-align: center;
+}
+
+#search {
+  width: 90%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+#filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px;
+}
+
+#filters select {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+
+.channel {
+  background: #1a1a1a;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.channel:hover {
+  transform: scale(1.05);
+}
+
+.channel img {
+  width: 100%;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.channel span {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.9rem;
+}
+
+.player-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.player-wrapper.show {
+  display: flex;
+}
+
+.player-box {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+}
+
+.player-box video {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.close-player {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background: red;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+}
+
+.popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.popup-btn {
+  margin: 10px;
+  padding: 10px 20px;
+  background: #f06;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.popup-btn.cancel {
+  background: #555;
+    }
