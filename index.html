@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tata Play IPTV Web</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      margin: 0;
+      background: #f2f2f2;
+      color: #222;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #8200ff;
+      padding: 10px 20px;
+      color: white;
+    }
+    header img {
+      height: 40px;
+    }
+    #refresh {
+      background: white;
+      color: #8200ff;
+      border: none;
+      padding: 5px 12px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #filters, #search-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 15px;
+    }
+    #filters select, #search {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      min-width: 120px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      padding: 10px 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.03);
+    }
+    .card img {
+      width: 100%;
+      height: 80px;
+      object-fit: contain;
+    }
+    .player-wrapper {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    .player-wrapper.show {
+      display: flex;
+    }
+    .player-box {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+    }
+    video {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .close-player {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: red;
+      color: white;
+      border: none;
+      font-size: 18px;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
+    #popup {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    #popup-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 300px;
+    }
+    #popup-box button {
+      margin: 10px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #popup-ok {
+      background: #8200ff;
+      color: white;
+    }
+    #popup-cancel {
+      background: gray;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div id="popup">
+    <div id="popup-box">
+      <p>Join our Telegram Channel for daily IPTV updates</p>
+      <a href="http://t.me/IPTVM3Y" target="_blank">
+        <button id="popup-ok">Join Now</button>
+      </a>
+      <button id="popup-cancel" onclick="document.getElementById('popup').style.display='none'">Cancel</button>
+    </div>
+  </div>
+  <header>
+    <img src="tp.png" alt="Tata Play Logo" />
+    <button id="refresh">Refresh</button>
+  </header>
+  <div id="search-container">
+    <input type="text" id="search" placeholder="Search channels..." />
+  </div>
+  <div id="filters">
+    <select id="categoryFilter"><option value="">Category</option></select>
+    <select id="languageFilter"><option value="">Language</option></select>
+    <select id="genreFilter"><option value="">Genre</option></select>
+  </div>
+  <div class="grid" id="channelGrid"></div>
+  <div class="player-wrapper" id="playerWrapper">
+    <div class="player-box">
+      <button class="close-player" onclick="closePlayer()">&times;</button>
+      <video id="videoPlayer" controls autoplay></video>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/dashjs/dist/dash.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      let channels = [];
+
+      async function fetchChannels() {
+        try {
+          const res = await fetch("channels.json");
+          channels = await res.json();
+          renderFilters();
+          renderChannels(channels);
+        } catch (err) {
+          console.error("Error loading channels:", err);
+        }
+      }
+
+      function renderFilters() {
+        const catSet = new Set();
+        const langSet = new Set();
+        const genreSet = new Set();
+
+        channels.forEach(ch => {
+          if (ch.category) catSet.add(ch.category);
+          if (ch.language) langSet.add(ch.language);
+          if (ch.genre) genreSet.add(ch.genre);
+        });
+
+        fillSelect("categoryFilter", catSet);
+        fillSelect("languageFilter", langSet);
+        fillSelect("genreFilter", genreSet);
+      }
+
+      function fillSelect(id, values) {
+        const sel = document.getElementById(id);
+        sel.innerHTML = `<option value="">${sel.options[0].text}</option>`;
+        values.forEach(val => {
+          const opt = document.createElement("option");
+          opt.value = val;
+          opt.textContent = val;
+          sel.appendChild(opt);
+        });
+      }
+
+      function renderChannels(list) {
+        const grid = document.getElementById("channelGrid");
+        grid.innerHTML = "";
+        list.forEach(channel => {
+          const card = document.createElement("div");
+          card.className = "card";
+          const logoUrl = getLogoUrl(channel.name);
+          card.innerHTML = `
+            <img src="${logoUrl}" alt="${channel.name}">
+            <h3>${channel.name}</h3>
+            <span>${channel.category || 'Uncategorized'}</span>
+          `;
+          card.onclick = () => playChannel(channel.url);
+          grid.appendChild(card);
+        });
+      }
+
+      function getLogoUrl(name) {
+        const formatted = name.toLowerCase().replace(/\s+/g, "_");
+        return `https://raw.githubusercontent.com/amjiddader/tv_logo/master/${formatted}.png`;
+      }
+
+      function applyFilters() {
+        const q = document.getElementById("search").value.toLowerCase();
+        const cat = document.getElementById("categoryFilter").value;
+        const lang = document.getElementById("languageFilter").value;
+        const genre = document.getElementById("genreFilter").value;
+
+        const filtered = channels.filter(ch =>
+          (!q || ch.name.toLowerCase().includes(q)) &&
+          (!cat || ch.category === cat) &&
+          (!lang || ch.language === lang) &&
+          (!genre || ch.genre === genre)
+        );
+
+        renderChannels(filtered);
+      }
+
+      function playChannel(url) {
+        const wrapper = document.getElementById("playerWrapper");
+        const oldPlayer = document.getElementById("videoPlayer");
+        const newPlayer = oldPlayer.cloneNode(true);
+        oldPlayer.parentNode.replaceChild(newPlayer, oldPlayer);
+
+        newPlayer.src = "";
+        newPlayer.load();
+
+        if (url.includes(".mpd")) {
+          const dash = dashjs.MediaPlayer().create();
+          dash.initialize(newPlayer, url, true);
+        } else if (url.includes(".m3u8")) {
+          if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource(url);
+            hls.attachMedia(newPlayer);
+          } else {
+            newPlayer.src = url;
+          }
+        } else if (url.includes("php?id=") || url.includes("m3u8?id=")) {
+          fetch(url)
+            .then(res => res.text())
+            .then(u => {
+              newPlayer.src = u.trim();
+              newPlayer.load();
+            });
+        } else {
+          newPlayer.src = url;
+          newPlayer.load();
+        }
+
+        wrapper.classList.add("show");
+      }
+
+      window.closePlayer = () => {
+        const wrapper = document.getElementById("playerWrapper");
+        const player = document.getElementById("videoPlayer");
+        wrapper.classList.remove("show");
+        player.pause();
+        player.src = "";
+      };
+
+      document.getElementById("search").addEventListener("input", applyFilters);
+      document.getElementById("categoryFilter").addEventListener("change", applyFilters);
+      document.getElementById("languageFilter").addEventListener("change", applyFilters);
+      document.getElementById("genreFilter").addEventListener("change", applyFilters);
+      document.getElementById("refresh").addEventListener("click", () => {
+        fetchChannels();
+        document.getElementById("search").value = "";
+        ["categoryFilter", "languageFilter", "genreFilter"].forEach(id => {
+          document.getElementById(id).value = "";
+        });
+      });
+
+      fetchChannels();
+    });
+  </script>
+</body>
+        </html>
