@@ -307,6 +307,51 @@
 
       fetchChannels();
     });
-  </script>
+    <div id="channel-container" style="padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px;"></div>
+
+<div id="player-container" style="display:none; position:fixed; bottom:0; width:100%; background:#000; z-index:1000;">
+  <video id="player" controls autoplay style="width:100%; height:240px;"></video>
+</div>
+
+<script>
+fetch('channels.json')
+  .then(res => res.json())
+  .then(channels => {
+    const container = document.getElementById('channel-container');
+    container.innerHTML = '';
+    channels.forEach(channel => {
+      const card = document.createElement('div');
+      card.className = 'channel-card';
+      card.style = `
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      `;
+      card.innerHTML = \`
+        <img src="\${channel.logo}" alt="\${channel.name}" style="width:100%; height:100px; object-fit:contain; margin-bottom:10px;" />
+        <h4 style="font-size:0.9rem; margin:0;">\${channel.name}</h4>
+      \`;
+      card.onclick = () => playChannel(channel.url);
+      container.appendChild(card);
+    });
+  })
+  .catch(err => {
+    document.getElementById('channel-container').innerText = 'Failed to load channels.';
+    console.error(err);
+  });
+
+function playChannel(url) {
+  const playerContainer = document.getElementById('player-container');
+  const player = document.getElementById('player');
+  player.src = url;
+  playerContainer.style.display = 'block';
+  player.play();
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+</script>
 </body>
         </html>
