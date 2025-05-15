@@ -1,20 +1,33 @@
 :root {
-  --primary-color: #f037a5; /* Tata Play Gradient Pink */
-  --secondary-color: #ffffff; /* Light background */
-  --text-color: #1e1e1e; /* Dark text */
-  --card-bg: #f8f8f8; /* Light card background */
-  --card-border: #f037a5; /* Pink border for cards */
-  --button-bg: linear-gradient(45deg, #f037a5, #7b2ff7); /* Gradient button */
-  --button-hover-bg: #e02c90; /* Darker pink on hover */
-  --badge-bg: #eee; /* Light badge background */
+  --primary-color: #f037a5;
+  --secondary-color: #ffffff;
+  --text-color: #1e1e1e;
+  --card-bg: #f8f8f8;
+  --card-border: #f037a5;
+  --button-bg: linear-gradient(45deg, #f037a5, #7b2ff7);
+  --button-hover-bg: #e02c90;
+  --badge-bg: #eee;
   --shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Dark Theme */
+body.dark {
+  --secondary-color: #121212;
+  --text-color: #ffffff;
+  --card-bg: #1e1e1e;
+  --card-border: #7b2ff7;
+  --button-bg: linear-gradient(45deg, #7b2ff7, #f037a5);
+  --button-hover-bg: #9a47f7;
+  --badge-bg: #333;
+}
+
+/* Base Styles */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background: var(--secondary-color);
   color: var(--text-color);
+  transition: all 0.3s ease;
 }
 
 header {
@@ -35,7 +48,7 @@ header .button-group {
   gap: 12px;
 }
 
-header button {
+header .theme-toggle {
   background: var(--button-bg);
   color: #fff;
   border: none;
@@ -47,7 +60,7 @@ header button {
   transition: background 0.3s ease;
 }
 
-header button:hover {
+header .theme-toggle:hover {
   background: var(--button-hover-bg);
 }
 
@@ -124,9 +137,9 @@ header button:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.85);
   z-index: 999;
-  color: #000;
+  color: #fff;
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(10px);
@@ -143,6 +156,7 @@ header button:hover {
   border-radius: 20px;
   box-shadow: var(--shadow);
   overflow: hidden;
+  background: #000;
 }
 
 .player-box video {
