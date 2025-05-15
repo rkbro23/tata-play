@@ -1,12 +1,13 @@
 :root {
-  --primary-color: #f03732; /* Tata Play Red */
-  --secondary-color: #1e1e1e; /* Dark background color */
-  --text-color: #ffffff; /* White text */
-  --card-bg: #2e2e2e; /* Dark card background */
-  --card-border: #f03732; /* Red border for cards */
-  --button-bg: var(--primary-color); /* Red button background */
-  --button-hover-bg: #d02a28; /* Darker red on hover */
-  --badge-bg: #444; /* Dark badge background */
+  --primary-color: #f037a5; /* Tata Play Gradient Pink */
+  --secondary-color: #ffffff; /* Light background */
+  --text-color: #1e1e1e; /* Dark text */
+  --card-bg: #f8f8f8; /* Light card background */
+  --card-border: #f037a5; /* Pink border for cards */
+  --button-bg: linear-gradient(45deg, #f037a5, #7b2ff7); /* Gradient button */
+  --button-hover-bg: #e02c90; /* Darker pink on hover */
+  --badge-bg: #eee; /* Light badge background */
+  --shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 body {
@@ -20,26 +21,26 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 15px 25px;
   background: var(--secondary-color);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow);
 }
 
 header img {
-  max-height: 50px; /* Slightly larger logo */
+  max-height: 45px;
 }
 
 header .button-group {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 header button {
   background: var(--button-bg);
-  color: var(--text-color);
+  color: #fff;
   border: none;
   padding: 10px 20px;
-  border-radius: 25px;
+  border-radius: 30px;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
@@ -53,33 +54,33 @@ header button:hover {
 #search-container {
   display: flex;
   justify-content: center;
-  margin: 20px auto;
+  margin: 30px auto;
 }
 
 #search {
-  width: 350px; /* Increased width for better usability */
-  padding: 12px 15px;
-  border-radius: 25px;
-  border: 1px solid #444;
+  width: 400px;
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: 1px solid #ddd;
   outline: none;
   font-size: 14px;
-  background: #333;
+  background: #f0f0f0;
   color: var(--text-color);
 }
 
 #filters {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 15px;
   margin: 20px auto;
   flex-wrap: wrap;
 }
 
 #filters select {
   padding: 12px;
-  border-radius: 20px;
-  border: 1px solid #444;
-  background: var(--card-bg);
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  background: #fff;
   color: var(--text-color);
   font-size: 14px;
   cursor: pointer;
@@ -87,30 +88,33 @@ header button:hover {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
   padding: 20px;
 }
 
 .card {
   background: var(--card-bg);
-  border: 2px solid var(--card-border);
-  border-radius: 15px;
+  border: 2px solid transparent;
+  border-radius: 20px;
   text-align: center;
   padding: 20px;
-  transition: transform 0.3s;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .card:hover {
-  transform: scale(1.05);
+  transform: scale(1.04);
+  border-color: var(--card-border);
 }
 
 .card img {
   width: 100%;
-  height: 150px; /* Slightly larger images */
+  height: 140px;
   object-fit: contain;
-  border-radius: 10px;
+  border-radius: 15px;
+  margin-bottom: 10px;
 }
 
 .player-wrapper {
@@ -120,11 +124,12 @@ header button:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   z-index: 999;
-  color: #fff;
+  color: #000;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(10px);
 }
 
 .player-wrapper.show {
@@ -135,11 +140,14 @@ header button:hover {
   position: relative;
   max-width: 90%;
   width: 800px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
 .player-box video {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 .close-player {
@@ -149,10 +157,10 @@ header button:hover {
   background: var(--primary-color);
   color: white;
   border: none;
-  font-size: 24px;
+  font-size: 20px;
   border-radius: 50%;
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
 }
 
