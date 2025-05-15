@@ -136,3 +136,22 @@ function playChannel(url) {
 
   fetchChannels();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const themeToggle = document.getElementById("theme-toggle");
+  const body = document.body;
+
+  // Check saved theme
+  if (localStorage.getItem("theme") === "light") {
+    body.classList.add("light-theme");
+  }
+
+  themeToggle.addEventListener("click", () => {
+    body.classList.toggle("light-theme");
+    if (body.classList.contains("light-theme")) {
+      localStorage.setItem("theme", "light");
+    } else {
+      localStorage.setItem("theme", "dark");
+    }
+  });
+});
