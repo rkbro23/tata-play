@@ -1,0 +1,113 @@
+:root {
+  --primary-color: #f037a5;
+  --secondary-color: #ffffff;
+  --text-color: #1e1e1e;
+  --card-bg: #f8f8f8;
+  --card-border: #f037a5;
+  --button-bg: linear-gradient(45deg, #f037a5, #7b2ff7);
+  --button-hover-bg: #e02c90;
+  --shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  --player-bg: rgba(0, 0, 0, 0.85);
+  --close-button-bg: #f037a5;
+  --close-button-hover-bg: #e02c90;
+}
+
+/* Player Wrapper */
+.player-wrapper {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--player-bg);
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-wrapper.show {
+  display: flex;
+}
+
+/* Player Box */
+.player-box {
+  position: relative;
+  max-width: 95%;
+  width: 90%;
+  max-height: 60%;
+  background: #000;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.player-box video {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}
+
+/* Close Button */
+.close-player {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background: var(--close-button-bg);
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.close-player:hover {
+  background: var(--close-button-hover-bg);
+}
+
+/* Grid for Channels */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 2px solid transparent;
+  border-radius: 15px;
+  text-align: center;
+  padding: 15px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  border-color: var(--card-border);
+}
+
+.card img {
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .player-box {
+    width: 95%;
+    height: auto;
+  }
+
+  .card img {
+    height: 120px;
+  }
+}
