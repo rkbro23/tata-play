@@ -1,12 +1,12 @@
 [
   {
-    "name": "Tmeallinonereborn",
+    "name": "@nubcarder",
     "genre": "Entertainment",
     "category": "General",
     "language": "Unknown",
     "quality": "Unknown",
     "logo": "https://github.com/iptv-org/iptv/tree/master/logos/tmeallinonereborn.png",
-    "url": "https://embed-cloudfront.wistia.com/deliveries/282114c59788866afb4d40b935a62258.m3u8"
+    "url": "https://m3uplaylist-plum.vercel.app/m3u_playlist.m3u8"
   },
   {
     "name": "Viewer Channel 0",
