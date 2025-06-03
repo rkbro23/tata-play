@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website Down</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f9f9fb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #1e1e1e;
+      margin-bottom: 0.5rem;
+      animation: fadeInDown 1s ease-out;
+    }
+    p {
+      color: #555;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      animation: fadeInDown 1.5s ease-out;
+    }
+    .buttons a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      margin: 0.4rem;
+      text-decoration: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: transform 0.3s ease, background 0.3s ease;
+      animation: fadeInUp 2s ease-out;
+    }
+    .buttons a:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+    .buttons img {
+      width: 20px;
+      height: 20px;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <lottie-player
+    src="https://assets2.lottiefiles.com/packages/lf20_totrpclr.json"
+    background="transparent"
+    speed="1"
+    style="width: 250px; height: 250px;"
+    loop
+    autoplay
+  ></lottie-player>  <h1>⛔️ Website Currently Down</h1>
+  <p>This TATA PLAY Channel Streaming Website is currently down.<br />Website Owner: <strong>@nubcarder</strong></p>  <div class="buttons">
+    <a href="https://t.me/IPTVM3Y" target="_blank">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/telegram-app.png" alt="Telegram" />
+      Redirect to Channel
+    </a>
+    <a href="https://t.me/muskchatt" target="_blank">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/group-foreground-selected.png" alt="Group" />
+      Redirect to Group Chat
+    </a>
+    <a href="https://youtube.com/@multi-movies99?si=r1dPYGZ2VNJhLVe6" target="_blank">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/youtube-play.png" alt="YouTube" />
+      Redirect to YouTube Channel
+    </a>
+  </div>
+</body>
+</html>
